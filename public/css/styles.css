@@ -1,6 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Share+Tech&display=swap');
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+:root {
+ /*--- Color Scheme ---*/
+ --content-background: #f8d567;
+ --content-color: #20303d;
+ --content-border: #3d4051;
+ --blur-background: rgba(41, 44, 61, 0.75);
+ --header-color: #30415d;
+ --nav-color: #1c304c;
+ --nav-hover-color: #1d346c;
+ --title-color: #ede1e4;
+
+ /*--- Font ---*/
+ --title-font: 'Share Tech';
+ --content-font: 'Roboto';
+}
+
+body {
+  min-width: 500px;
+}
+
+/*==========
+General text
+==========*/
+h1,
+h2,
+header {
+  font-family: var(--title-font);
+}
+
+p,
+li {
+  font-family: var(--content-font);
+}
+
+.strongText {
+  font-weight: 800;
+  font-size: larger;
+  
+}
+/*========
+header.ejs
+========*/
+header {
+  background-color: var(--header-color);
+  padding: 1.5rem 1rem;
+}
+
+header a {
+  color: var(--title-color);
+  text-decoration: none;
+}
+
+#tools {
+  float: right;
+}
+
+/*============
+navigation.ejs
+============*/
+nav {
+  display: flex;
+  width: 100%;
+  flex-flow: column wrap;
+}
+
+nav > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav > ul > li {
+  display: block;
+  text-align: center;
+  font-family: var(--title-font);
+  padding: 1rem;
+  color: var(--title-color);
+  background-color: var(--nav-color);
+}
+
+nav > ul > li:active, nav > ul > li:hover {
+  background-color: var(--nav-hover-color);
+}
+
+/*=======
+index.ejs
+=======*/
+main {
+  background: url('../images/site/checkerboard.jpg') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main h1 {
+  background-color: var(--content-background);
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+main > div {
+  width: 100%;
+  margin: 0 auto;
+}
+
+main > div > div {
+  background-color: var(--blur-background);
+  position: absolute;
+  margin: 1rem;
+  padding: 1rem;
+  color: var(--title-color);
+  border: 3px solid var(--content-color);
+  border-radius: 10px;
+  box-shadow: 0 0 3px 3px var(--content-border);
+}
+
+main > div > div > figure {
+  margin: 0; 
+}
+
+main > div > div> figure > img {
+  width: 75%;
+}
+
+main > div > figure {
+  width: 100%;
+  margin: 0 auto;
+}
+
+main > div > figure > img {
+  width: 100%;
+
+}
+
+main section {
+  background-color: var(--content-background);
+  border: 10px solid var(--content-border);
+  border-radius: 15px;
+  color: var(--content-color);
+  padding: 1rem;
+  width: 100%;
+  margin: 1rem 0; 
+}
+
+main > section:first-of-type > ul {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  gap: 16px;
+}
+
+main > section:first-of-type > ul > li {
+  width: 40%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+main > section:first-of-type > ul > li > figure > img {
+  display: block;
+  margin: 0 auto;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 100px;
+  max-height: 100px;
+  width: 100%;
+  height: 100%;
+}
+
+main > section:first-of-type > ul > li > a {
+  text-decoration: none;
+}
+
+main > section:first-of-type > ul > li > a > p {
+  text-align: center;
+  color: var(--content-color);
+}
+
+footer p {
+  background-color: var(--header-color);
+  color: var(--title-color);
+  margin: 0;
+  padding: 1rem;
+}
+
+@media screen and (min-width: 625px) {
+  /*========
+  Navigation
+  ========*/
+  nav {
+    width: 100%;
+  }
+
+  nav > ul {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+  }
+  
+  nav > ul > li {
+    display: inline-block;
+    flex-grow: 1;
+  }
+
+  main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+
+  main > h1, 
+  main > div {
+    width: 75%;
+  }
+
+  main > section {
+    width: 40%;
+  }
+
+  main > div > div {
+    width: 30%;
+    min-width: 200px;
+  }
 }
