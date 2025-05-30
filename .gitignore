@@ -18,3 +18,4 @@ node_modules
 # as required by the activity
 README.md
 pnpm-lock.yaml
+.vscode
