@@ -10,6 +10,7 @@
 :root {
  /*--- Color Scheme ---*/
  --content-background: #f8d567;
+ --content-background-2: #d6b345;
  --content-color: #20303d;
  --content-border: #3d4051;
  --blur-background: rgba(41, 44, 61, 0.75);
@@ -44,8 +45,12 @@ li {
 .strongText {
   font-weight: 800;
   font-size: larger;
-  
 }
+
+.strong {
+  font-weight: 800;
+}
+
 /*========
 header.ejs
 ========*/
@@ -87,6 +92,11 @@ nav > ul > li {
   background-color: var(--nav-color);
 }
 
+nav > ul > li > a {
+  text-decoration: none;
+  color: var(--title-color);
+}
+
 nav > ul > li:active, nav > ul > li:hover {
   background-color: var(--nav-hover-color);
 }
@@ -95,7 +105,7 @@ nav > ul > li:active, nav > ul > li:hover {
 index.ejs
 =======*/
 main {
-  background: url('../images/site/checkerboard.jpg') center/cover no-repeat;
+  background: url('../images/site/checkerboard.jpg') top left/auto repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -187,11 +197,105 @@ main > section:first-of-type > ul > li > a > p {
   color: var(--content-color);
 }
 
-footer p {
+footer {
+  display: flex;
+  flex-flow: row wrap;
   background-color: var(--header-color);
+  width: 100%;
+}
+
+footer p {
   color: var(--title-color);
   margin: 0;
   padding: 1rem;
+}
+
+/*=============
+classification.ejs
+============*/
+#inv-display {
+  background-color: var(--content-background);
+  border: 3px solid var(--content-color);
+  border-radius: 10px;
+  box-shadow: 0 0 3px 3px var(--content-border);
+  padding: 5px 0;
+}
+
+#inv-display > li {
+  background-color: var(--content-background-2);
+  list-style-type: none;
+  padding: 10px;
+  margin: 15px 10px;
+}
+
+#inv-display > li > a {
+  display: block;
+  width: 100%;
+}
+
+#inv-display > li > a > img{
+  margin: 0 auto;
+}
+
+.namePrice > h2 > a {
+  text-decoration: none;
+  color: var(--content-color);
+}
+
+/*=============
+vehicle.ejs
+============*/
+#car-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#car-display > div > img {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#car-display > .carSpec {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+#car-display > .carSpec > li {
+  width: 100%;
+}
+
+.carSpec > li:nth-child(odd) {
+  background-color: var(--content-background-2);
+  padding: 5px;
+}
+
+/*===
+error
+===*/
+.error {
+  background-color: var(--content-background);
+  border: 3px solid var(--content-color);
+  border-radius: 10px;
+  box-shadow: 0 0 3px 3px var(--content-border);
+  margin: 15px;
+  padding: 15px;
+}
+
+#genError {
+  display: inline-flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: var(--content-background);
+  color: var(--content-color);
+  text-decoration: none;
+}
+
+#genError:hover {
+  background-color: var(--content-background-2);
+  cursor: pointer;
 }
 
 @media screen and (min-width: 625px) {
@@ -212,6 +316,8 @@ footer p {
   nav > ul > li {
     display: inline-block;
     flex-grow: 1;
+    text-decoration: none;
+    color: var(--title-color);
   }
 
   main {
@@ -233,5 +339,39 @@ footer p {
   main > div > div {
     width: 30%;
     min-width: 200px;
+  }
+
+  #inv-display {
+    max-width: 80%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+  }
+
+  #inv-display > li {
+    flex: 0 1 200px;
+  }
+
+  #car-display {
+    width: 75%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+
+  #car-display > div {
+    width: 50%;
+    height: 100%;
+    margin: auto 0;
+  }
+
+  #car-display > div > img {
+  width: 100%;
+  }
+
+  #car-display > .carSpec {
+    width: 50%;
   }
 }

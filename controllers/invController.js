@@ -8,7 +8,6 @@ const invCont = {};
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
     const classification_id = req.params.classificationId;
-    console.log("classification Id: ", classification_id);
     const data = await invModel.getInventoryByClassificationId(classification_id);
     const grid = await utilities.buildClassificationGrid(data)
     let nav = await utilities.getNav();
@@ -24,9 +23,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build car by inventory view
  * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
-    console.table(req.params);
     const inventory_id = req.params.inventoryId;
-    console.log(`inventory_id: ${inventory_id}`);
     const vehicle = await invModel.getCar(inventory_id);
     const grid = await utilities.buildSpecificCarGrid(vehicle)
     let nav = await utilities.getNav()
@@ -36,6 +33,16 @@ invCont.buildByInventoryId = async function (req, res, next) {
         nav,
         grid,
     })
+}
+
+/* ***************************
+ *  Build error
+ * ************************** */
+invCont.buildError = async function (req, res, next) {
+    console.log('buildError executes');
+    const err = new Error('<p class="error">Internal Server Error.</p>');
+    err.status = 500
+    throw err;
 }
 
 module.exports = invCont

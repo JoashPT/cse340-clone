@@ -30,7 +30,6 @@ Util.getNav = async function (req, res, next) {
 Util.buildClassificationGrid = async function(data) {
     let grid;
     if (data.length > 0) {
-        //console.log(data);
         grid = '<ul id="inv-display">'
         data.forEach(vehicle => {
             grid += '<li>';
@@ -42,7 +41,7 @@ Util.buildClassificationGrid = async function(data) {
             grid += '<div class="namePrice">';
             grid += '<hr/>';
             grid += '<h2>';
-            grid += '<a href="../../inv/detail' + vehicle.inv_id +'" title="View '
+            grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View '
             + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
             + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>';
             grid += '</h2>';
@@ -69,8 +68,8 @@ Util.buildSpecificCarGrid = async function(vehicle) {
             grid += '<img src="' + vehicle.inv_image + '" alt="' + vehicle.inv_make + ' ' + vehicle.inv_model +' on CSE Motors"/>';
             grid += '</div>';
             grid += '<ul class="carSpec">';
-            grid += '<li><span class="strong">' + vehicle.inv_make + ' ' + vehicle.inv_model + '</h3></li>';
-            grid += '<li><span class="strong">Price: $</span><span>' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span></li>';
+            grid += '<li><span class="strongText">' + vehicle.inv_make + ' ' + vehicle.inv_model + '</span></li>';
+            grid += '<li><span class="strong">Price:</span> $' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</li>';
             grid += '<li><span class="strong">Description:</span> ' + vehicle.inv_description + '</li>';
             grid += '<li><span class="strong">Color:</span> ' + vehicle.inv_color + '</li>';
             grid += '<li><span class="strong">Miles:</span> ' + new Intl.NumberFormat('en-Us').format(vehicle.inv_miles) + '</li>'
