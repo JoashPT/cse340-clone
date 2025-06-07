@@ -270,6 +270,62 @@ vehicle.ejs
   padding: 5px;
 }
 
+/*========
+login.ejs + account.ejs
+========*/
+.accountForm {
+  display: flex;
+  flex-flow: column wrap;
+  background-color: var(--content-background);
+  border: solid 10px var(--content-border);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 15px 0;
+  width: 50%;
+  min-width: 250px;
+}
+
+.accountForm > fieldset > label {
+  color: var(--content-color);
+  font-size: larger;
+  font-family: var(--title-font);
+}
+
+.accountForm > fieldset > input[type=text] {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.accountForm > fieldset > input[type=submit] {
+  align-self: center;
+  padding: 5px;
+  border: none;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  background-color: var(--nav-color);
+  color: var(--title-color);
+  text-transform: capitalize;
+}
+
+.accountForm > fieldset > input[type=submit]:hover {
+  background-color: var(--nav-hover-color);
+}
+
+.accountForm > p > a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 5px;
+  background-color: var(--nav-color);
+  color: var(--title-color);
+}
+
+.accountForm > p > a:hover {
+  background-color: var(--nav-hover-color);
+}
+
 /*===
 error
 ===*/
@@ -296,6 +352,20 @@ error
 #genError:hover {
   background-color: var(--content-background-2);
   cursor: pointer;
+}
+
+/*====
+notice
+====*/
+#messages {
+  background-color: var(--content-color);
+  margin: 10px 0;
+  padding: 15px;
+}
+
+#messages > .notice > li {
+  list-style-type: none;
+  color: var(--title-color);
 }
 
 @media screen and (min-width: 625px) {

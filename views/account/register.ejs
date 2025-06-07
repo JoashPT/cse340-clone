@@ -1,0 +1,21 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%- messages() %>
+
+<form class="accountForm" action="/account/register" target="_self" method="post">
+    <fieldset>
+        <label for="account_firstname">First Name:</label>
+        <input type="text" id="fname" name="account_firstname">
+        <label for="account_lastname">Last Name:</label>
+        <input type="text" id="lname" name="account_lastname">
+        <label for="account_email">Email:</label>
+        <input type="text" id="email" name="account_email" required>
+        <label for="account_password">Password:</label>
+        <input type="text" id="password" name="account_password" pattern=".{12,}" required>
+        <input type="submit" value="Sign Up">
+    </fieldset>
+</form>
