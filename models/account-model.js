@@ -12,4 +12,35 @@ async function registerAccount(account_firstname, account_lastname, account_emai
     }
 }
 
-module.exports = {registerAccount}
+/* **********************
+ *   Check for existing email
+ * ********************* */
+async function checkExistingEmail(account_email) {
+    try {
+        const sql = "SELECT * FROM account WHERE account_email = $1";
+        const email = await pool.query(sql, [account_email]);
+        return email.rowCount;
+    } catch (error) {
+        return error.message;
+    }
+}
+
+/* **********************
+ *   Check for login attempt
+ * ********************* */
+async function checkValidAccount(account_email, account_password) {
+    try {
+        console.log(account_email);
+        console.log(account_password);
+        const sql = "SELECT * FROM account WHERE account_email = $1 AND account_password = $2";
+        return await pool.query(sql, [account_email, account_password]);
+    } catch (error) {
+        return error.message;
+    }
+}
+
+module.exports = {
+    registerAccount,
+    checkExistingEmail,
+    checkValidAccount
+}

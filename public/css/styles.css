@@ -291,7 +291,9 @@ login.ejs + account.ejs
   font-family: var(--title-font);
 }
 
-.accountForm > fieldset > input[type=text] {
+.accountForm > fieldset > input[type=text],
+.accountForm > fieldset > input[type=email],
+.accountForm > fieldset > input[type=password] {
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
@@ -327,6 +329,26 @@ login.ejs + account.ejs
 }
 
 /*===
+input
+===*/
+input:required:invalid, input:focus:invalid {
+  background-color: #e99;
+}
+
+input:required:valid {
+  background-color: #9e9;
+}
+
+/*=======
+.required
+=======*/
+.required {
+  display: block;
+  font-style: italic;
+  font-size: small;
+}
+
+/*===
 error
 ===*/
 .error {
@@ -357,7 +379,7 @@ error
 /*====
 notice
 ====*/
-#messages {
+#messages, .notice {
   background-color: var(--content-color);
   margin: 10px 0;
   padding: 15px;
@@ -366,6 +388,12 @@ notice
 #messages > .notice > li {
   list-style-type: none;
   color: var(--title-color);
+}
+
+.notice > li {
+  color: var(--title-color);
+  font-size: small;
+  padding: 1rem;
 }
 
 @media screen and (min-width: 625px) {
