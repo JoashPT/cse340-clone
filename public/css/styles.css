@@ -210,6 +210,12 @@ footer p {
   padding: 1rem;
 }
 
+.columnFlow {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
 /*=============
 classification.ejs
 ============*/
@@ -219,6 +225,7 @@ classification.ejs
   border-radius: 10px;
   box-shadow: 0 0 3px 3px var(--content-border);
   padding: 5px 0;
+  min-width: 25%;
 }
 
 #inv-display > li {
@@ -293,12 +300,18 @@ login.ejs + account.ejs
 
 .accountForm > fieldset > input[type=text],
 .accountForm > fieldset > input[type=email],
-.accountForm > fieldset > input[type=password] {
+.accountForm > fieldset > input[type=password],
+.accountForm > fieldset > select,
+.accountForm > fieldset > textarea {
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
   border: none;
   border-radius: 5px;
+}
+
+.accountForm > fieldset > textarea {
+  height: 3rem;
 }
 
 .accountForm > fieldset > input[type=submit] {
@@ -326,6 +339,23 @@ login.ejs + account.ejs
 
 .accountForm > p > a:hover {
   background-color: var(--nav-hover-color);
+}
+
+/*
+vehicle management
+*/
+.management {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--content-background);
+  border: solid 10px var(--content-border);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.management > a {
+  margin: 0.5rem 0;
 }
 
 /*===

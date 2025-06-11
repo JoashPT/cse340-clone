@@ -40,8 +40,51 @@ async function getCar(inventory_id) {
     }
 }
 
+
+async function checkExistingClassification(classification_name) {
+    try {
+        console.log("checking existing classification")
+        const sql = "SELECT * FROM classification WHERE classification_name = $1";
+        const classification = await pool.query(sql, [classification_name]);
+        return classification.rowCount;
+    } catch (error) {
+        return error.message;
+    }
+}
+
+/* ***************************
+ *  Add classification data
+ * ************************** */
+async function addClassification(classification_name) {
+    try {
+        console.log("adding classification")
+        return await pool.query(`INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *`, [classification_name])
+    } catch (error) {
+        console.error("Add classification error " + error)
+    }
+}
+
+/* ***************************
+ *  Add new vehicle data
+ * ************************** */
+async function addVehicle(classification_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color) {
+    try {
+        console.log("add vehicle executing");
+        const sql = `INSERT INTO inventory 
+        (classification_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, inv_image, inv_thumbnail) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, '/images/vehicles/no-image.png', '/images/vehicles/no-image-tn.png') 
+        RETURNING *`
+        return await pool.query(sql, [classification_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color]);
+    } catch (error) {
+        return error.message
+    }
+}
+
 module.exports = {
     getClassifications,
     getInventoryByClassificationId,
-    getCar
+    getCar,
+    checkExistingClassification,
+    addClassification,
+    addVehicle
 }

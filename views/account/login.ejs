@@ -4,17 +4,19 @@
     res.redirect('/')
 } %>
 
-<%- messages() %>
+<div class="columnFlow">
+    <%- messages() %>
 
-<form class="accountForm" action="/account/login" method="post" target="_self">
-    <fieldset>
-        <label for="account_email">Email:</label>
-        <input type="email" id="email" name="account_email" value="<%= locals.account_email %>" required>
-        <label for="account_password">Password:</label>
-        <input type="password" id="password" name="account_password" required>
-        <input type="submit" value="login">
-    </fieldset>
-    <p>No account? 
-        <a href="/account/register">Sign Up</a>
-    </p>
-</form>
+    <form class="accountForm" action="/account/login" method="post" target="_self">
+        <fieldset>
+            <label for="account_email">Email:</label>
+            <input type="email" id="email" name="account_email" title="Email" value="<%= locals.account_email %>" required>
+            <label for="account_password">Password:</label>
+            <input type="password" id="password" title="Password" name="account_password" required>
+            <input type="submit" value="login">
+        </fieldset>
+        <p>No account? 
+            <a href="/account/register">Sign Up</a>
+        </p>
+    </form>
+</div>

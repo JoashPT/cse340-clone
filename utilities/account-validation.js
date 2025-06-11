@@ -80,7 +80,6 @@ validate.checkRegData = async(req, res, next) => {
 *  Deliver login view
 * *************************************** */
 validate.loginRules = () => {
-    console.log("login rules executes");
     return [
         body("account_email")
             .trim()

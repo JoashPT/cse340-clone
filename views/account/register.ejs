@@ -4,28 +4,30 @@
     res.redirect('/')
 } %>
 
-<%- messages() %>
+<div class="columnFlow">
+    <%- messages() %>
 
-<% if (errors) { %>
-    <ul class="notice">
-    <% errors.array().forEach(error => { %>
-        <li><%= error.msg %></li>
-    <% }) %>
-    </ul>
-<% } %>
+    <% if (errors) { %>
+        <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
+        </ul>
+    <% } %>
 
-<form class="accountForm" action="/account/register" method="post" target="_self" >
-    <fieldset>
-        <label for="account_firstname">First Name:</label>
-        <input type="text" id="fname" name="account_firstname" placeholder="John" value="<%= locals.account_firstname %>" required>
-        <label for="account_lastname">Last Name:</label>
-        <input type="text" id="lname" name="account_lastname" placeholder="Doe" value="<%= locals.account_lastname %>" required>
-        <label for="account_email">Email:</label>
-        <span class="reminder">Must be an email</span>
-        <input type="email" id="email" name="account_email" placeholder="johndoe@missing.com" value="<%= locals.account_email %>" required>
-        <label for="account_password">Password:</label>
-        <span class="reminder">Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
-        <input type="password" id="password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
-        <input type="submit" value="Sign Up">
-    </fieldset>
-</form>
+    <form class="accountForm" action="/account/register" method="post" target="_self" >
+        <fieldset>
+            <label for="account_firstname">First Name:</label>
+            <input type="text" id="fname" name="account_firstname" placeholder="John" title="Put your first name here" value="<%= locals.account_firstname %>" required>
+            <label for="account_lastname">Last Name:</label>
+            <input type="text" id="lname" name="account_lastname" placeholder="Doe" title="Put your last name here" value="<%= locals.account_lastname %>" required>
+            <label for="account_email">Email:</label>
+            <span class="reminder">Must be an email</span>
+            <input type="email" id="email" name="account_email" placeholder="johndoe@missing.com" title="Put your email here" value="<%= locals.account_email %>" required>
+            <label for="account_password">Password:</label>
+            <span class="reminder">Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
+            <input type="password" id="password" name="account_password" title="Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
+            <input type="submit" value="Sign Up">
+        </fieldset>
+    </form>
+</div>
