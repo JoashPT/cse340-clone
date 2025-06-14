@@ -24,5 +24,12 @@ router.post(
     invClassValidate.checkInventoryData,
     utilities.handleErrors(invController.addVehicle)
 );
+router.get('/getInventory/:classification_id', utilities.handleErrors(invController.getInventoryJSON));
+router.get('/edit/:inv_id', utilities.handleErrors(invController.buildInventoryUpdate));
+router.post(
+    '/update/',
+    invClassValidate.newInventoryRules(),
+    invClassValidate.checkUpdateData, 
+    utilities.handleErrors(invController.updateInventory));
 
 module.exports = router;

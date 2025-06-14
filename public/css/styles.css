@@ -123,7 +123,7 @@ main > div {
   margin: 0 auto;
 }
 
-main > div > div {
+#heroText {
   background-color: var(--blur-background);
   position: absolute;
   margin: 1rem;
@@ -134,11 +134,11 @@ main > div > div {
   box-shadow: 0 0 3px 3px var(--content-border);
 }
 
-main > div > div > figure {
+#heroText > figure {
   margin: 0; 
 }
 
-main > div > div> figure > img {
+#heroText> figure > img {
   width: 75%;
 }
 
@@ -464,7 +464,7 @@ notice
     width: 40%;
   }
 
-  main > div > div {
+  #heroText {
     width: 30%;
     min-width: 200px;
   }

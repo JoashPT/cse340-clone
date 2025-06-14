@@ -50,10 +50,12 @@ invCont.buildError = async function (req, res, next) {
  * ************************** */
 invCont.buildManagement = async function (req, res, next) {
     const nav = await utilities.getNav();
+    const classificationSelect = await utilities.buildClassificationList();
     res.render('./inventory/management', {
         title: "Vehicle Management",
         nav,
         errors: null,
+        classificationSelect,
     })
 }
 
@@ -104,7 +106,6 @@ invCont.registerNewClassification = async function (req, res, next) {
 Build add inventory view
 ===================== */
 invCont.buildAddInventory = async function (req, res, next) {
-    console.log('buildAddInventory executes')
     const nav = await utilities.getNav();
     const classificationList = await utilities.buildClassificationList();
     res.render('./inventory/add-inventory', {
@@ -145,6 +146,113 @@ invCont.addVehicle = async function (req, res, next) {
             nav,
         })
     }
+}
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+    const classification_id = parseInt(req.params.classification_id);
+    const invData = await invModel.getInventoryByClassificationId(classification_id);
+    if (invData[0].inv_id) {
+        return res.json(invData);
+    } else {
+        next(new Error("No data returned"));
+    }
+}
+
+/* ***************************
+ *  Update Inventory Data
+ * ************************* */
+invCont.updateInventory = async function (req, res, next) {
+    console.log("update inventory executes");
+    let nav = await utilities.getNav();
+    const {
+        classification_id, 
+        inv_id, 
+        inv_make, 
+        inv_model, 
+        inv_year, 
+        inv_description, 
+        inv_image,
+        inv_thumbnail,
+        inv_price, 
+        inv_miles, 
+        inv_color
+    } = req.body;
+
+    const updateResult = await invModel.updateInventory(
+        classification_id, 
+        inv_id,
+        inv_make, 
+        inv_model, 
+        inv_year, 
+        inv_description, 
+        inv_image,
+        inv_thumbnail,
+        inv_price, 
+        inv_miles, 
+        inv_color);
+
+    if (updateResult) {
+        console.log("vehicle update success")
+        const itemName = updateResult.inv_make + " " + updateResult.inv_model;
+        req.flash(
+            'notice',
+            `Congratulations, the ${itemName} is successfully updated.`
+        );
+        res.redirect('/inv/')
+        } else {
+        console.log("vehicle update fails")
+        let classificationList = await utilities.buildClassificationList();
+        const itemName = updateResult.inv_make + " " + updateResult.inv_model;
+        req.flash('notice', "Sorry, the udpate failed.")
+        res.status(501).render("inventory/update-inventory", {
+            title: "Edit" + itemName,
+            classificationList: classificationList,
+            nav,
+            errors: null,
+            inv_id,
+            inv_make,
+            inv_model,
+            inv_year,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_miles,
+            inv_color,
+            classification_id
+        })
+    }
+}
+
+/* ***************************
+ * Build Inventory Update
+ * ************************* */
+invCont.buildInventoryUpdate = async function (req, res, next) {
+    const inv_id = parseInt(req.params.inv_id)
+    const nav = await utilities.getNav();
+    const itemData = await invModel.getCar(inv_id)
+    const classificationList = await utilities.buildClassificationList(itemData.classification_id);
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+    res.render('./inventory/update-inventory', {
+        title: "Edit " + itemName,
+        nav,
+        classificationList: classificationList,
+        errors: null,
+        inv_id: itemData.inv_id,
+        inv_make: itemData.inv_make,
+        inv_model: itemData.inv_model,
+        inv_year: itemData.inv_year,
+        inv_description: itemData.inv_description,
+        inv_image: itemData.inv_image,
+        inv_thumbnail: itemData.inv_thumbnail,
+        inv_price: itemData.inv_price,
+        inv_miles: itemData.inv_miles,
+        inv_color: itemData.inv_color,
+        classification_id: itemData.classification_id
+    })
 }
 
 module.exports = invCont
