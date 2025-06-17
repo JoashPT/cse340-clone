@@ -130,6 +130,20 @@ async function updateInventory(
     }
 }
 
+/* ***************************
+ *  Delete vehicle data
+ * ************************** */
+async function deleteInventory(inv_id) {
+    try {
+        console.log("delete vehicle executing");
+        const sql = `DELETE FROM public.inventory WHERE inv_id = $1`;
+        const data = await pool.query(sql, [inv_id])
+        return data;
+    } catch (error) {
+        console.error("Delete Inventory Error")
+    }
+}
+
 module.exports = {
     getClassifications,
     getInventoryByClassificationId,
@@ -137,5 +151,6 @@ module.exports = {
     checkExistingClassification,
     addClassification,
     addVehicle,
-    updateInventory
+    updateInventory,
+    deleteInventory
 }
