@@ -64,8 +64,28 @@ header a {
   text-decoration: none;
 }
 
+#top-header {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: space-between;
+}
+
 #tools {
-  float: right;
+  align-self: flex-end;
+}
+
+#tools > ul {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+#tools > ul > li {
+  list-style-type: none;
+  font-family: var(--title-font);
+  padding: 0 1rem;
 }
 
 /*============

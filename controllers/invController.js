@@ -11,10 +11,12 @@ invCont.buildByClassificationId = async function (req, res, next) {
     const data = await invModel.getInventoryByClassificationId(classification_id);
     const grid = await utilities.buildClassificationGrid(data)
     let nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     const className = data[0].classification_name
     res.render('./inventory/classification', {
         title: className + " vehicles",
         nav,
+        greet,
         grid,
     })
 }
@@ -27,10 +29,12 @@ invCont.buildByInventoryId = async function (req, res, next) {
     const vehicle = await invModel.getCar(inventory_id);
     const grid = await utilities.buildSpecificCarGrid(vehicle)
     let nav = await utilities.getNav()
+    const greet = await utilities.accountGreet(req, res);
     const carName = `${vehicle.inv_make} ${vehicle.inv_model} ${vehicle.inv_year}`
     res.render('./inventory/vehicle', {
         title: carName,
         nav,
+        greet,
         grid,
     })
 }
@@ -50,10 +54,12 @@ invCont.buildError = async function (req, res, next) {
  * ************************** */
 invCont.buildManagement = async function (req, res, next) {
     const nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     const classificationSelect = await utilities.buildClassificationList();
     res.render('./inventory/management', {
         title: "Vehicle Management",
         nav,
+        greet,
         errors: null,
         classificationSelect,
     })
@@ -65,9 +71,11 @@ invCont.buildManagement = async function (req, res, next) {
 invCont.buildAddClassification = async function (req, res, next) {
     console.log('buildAddClassification executes')
     const nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     res.render('./inventory/add-classification', {
         title: "Add Classification",
         nav,
+        greet,
         errors: null,
     })
 }
@@ -78,6 +86,7 @@ invCont.buildAddClassification = async function (req, res, next) {
 invCont.registerNewClassification = async function (req, res, next) {
     console.log("register classification executes");
     let nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     const {classification_name} = req.body;
 
     const regResult = await invModel.addClassification(classification_name);
@@ -88,16 +97,14 @@ invCont.registerNewClassification = async function (req, res, next) {
             'notice',
             `Congratulations, you\'ve added a new classification ${classification_name}.`
         );
-        res.status(201).render("inventory/management", {
-            title: "Vehicle Management",
-            nav,
-        })
+        res.status(201).redirect('/inv/')
     } else {
         console.log("classification registration fails")
         req.flash('notice', "Sorry, the registration failed.")
         res.status(501).render("inventory/add-classification", {
             title: "Add Classification",
             nav,
+            greet
         })
     }
 }
@@ -107,10 +114,12 @@ Build add inventory view
 ===================== */
 invCont.buildAddInventory = async function (req, res, next) {
     const nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     const classificationList = await utilities.buildClassificationList();
     res.render('./inventory/add-inventory', {
         title: "Add Vehicle",
         nav,
+        greet,
         classificationList,
         errors: null,
     })
@@ -122,6 +131,7 @@ invCont.buildAddInventory = async function (req, res, next) {
 invCont.addVehicle = async function (req, res, next) {
     console.log("add vehicle executes");
     let nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     let classificationList = await utilities.buildClassificationList();
     const {classification_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color} = req.body;
 
@@ -133,10 +143,7 @@ invCont.addVehicle = async function (req, res, next) {
             'notice',
             `Congratulations, you\'ve added a new vehicle ${inv_year} ${inv_make} ${inv_model}.`
         );
-        res.status(201).render("inventory/management", {
-            title: "Vehicle Management",
-            nav,
-        })
+        res.status(201).redirect('/inv/')
     } else {
         console.log("classification registration fails")
         req.flash('notice', "Sorry, the registration failed.")
@@ -144,6 +151,7 @@ invCont.addVehicle = async function (req, res, next) {
             title: "Add Vehicle",
             classificationList,
             nav,
+            greet,
         })
     }
 }
@@ -167,6 +175,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 invCont.updateInventory = async function (req, res, next) {
     console.log("update inventory executes");
     let nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     const {
         classification_id, 
         inv_id, 
@@ -211,6 +220,7 @@ invCont.updateInventory = async function (req, res, next) {
             title: "Edit" + itemName,
             classificationList: classificationList,
             nav,
+            greet,
             errors: null,
             inv_id,
             inv_make,
@@ -233,12 +243,14 @@ invCont.updateInventory = async function (req, res, next) {
 invCont.buildInventoryUpdate = async function (req, res, next) {
     const inv_id = parseInt(req.params.inv_id)
     const nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     const itemData = await invModel.getCar(inv_id)
     const classificationList = await utilities.buildClassificationList(itemData.classification_id);
     const itemName = `${itemData.inv_make} ${itemData.inv_model}`
     res.render('./inventory/update-inventory', {
         title: "Edit " + itemName,
         nav,
+        greet,
         classificationList: classificationList,
         errors: null,
         inv_id: itemData.inv_id,
@@ -261,11 +273,13 @@ invCont.buildInventoryUpdate = async function (req, res, next) {
 invCont.buildInventoryDelete = async function (req, res, next) {
     const inv_id = parseInt(req.params.inv_id)
     const nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
     const itemData = await invModel.getCar(inv_id)
     const itemName = `${itemData.inv_make} ${itemData.inv_model}`
     res.render('./inventory/delete-confirm', {
         title: "Delete " + itemName,
         nav,
+        greet,
         errors: null,
         inv_id: itemData.inv_id,
         inv_make: itemData.inv_make,

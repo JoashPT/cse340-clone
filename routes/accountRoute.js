@@ -21,5 +21,18 @@ router.get(
     '/',
     utilities.checkLogin,
     utilities.handleErrors(accountController.buildManagement))
+//logout
+router.get('/logout', accountController.logoutManagement)
+router.get('/edit/:account_id', utilities.handleErrors(accountController.buildAccountEdit))
+router.post('/update/',
+    regValidate.editContentRules(),
+    regValidate.checkEditData,
+    utilities.handleErrors(accountController.updateAccountContent)
+)
+router.post('/update/password',
+    regValidate.editPassword(),
+    regValidate.checkEditData,
+    utilities.handleErrors(accountController.updateAccountPassword)
+)
 
 module.exports = router;

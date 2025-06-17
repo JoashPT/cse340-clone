@@ -33,10 +33,12 @@ validate.checkClassificationData = async(req, res, next) => {
     errors = validationResult(req);
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
+        const greet = await utilities.accountGreet(req, res);
         res.render("inventory/add-classification", {
             errors,
             title: "Add Classification",
             nav,
+            greet,
             classification_name,
         })
         return
@@ -129,10 +131,12 @@ validate.checkInventoryData = async(req, res, next) => {
     errors = validationResult(req);
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
+        const greet = await utilities.accountGreet(req, res);
         res.render("inventory/add-inventory", {
             errors,
             title: "Add Vehicle",
             nav,
+            greet,
             classification_id,
             inv_make,
             inv_model,
@@ -253,10 +257,12 @@ validate.checkUpdateData = async(req, res, next) => {
     errors = validationResult(req);
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
+        const greet = await utilities.accountGreet(req, res);
         res.render("inventory/update-inventory", {
             errors,
             title: "Edit Vehicle",
             nav,
+            greet,
             classification_id,
             inv_id,
             inv_make,

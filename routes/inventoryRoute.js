@@ -9,12 +9,13 @@ const utilities = require('../utilities/index');
 router.get('/type/:classificationId', utilities.handleErrors(invController.buildByClassificationId));
 router.get('/detail/:inventoryId', utilities.handleErrors(invController.buildByInventoryId));
 router.get('/error', utilities.handleErrors(invController.buildError));
-router.get('/', utilities.handleErrors(invController.buildManagement));
+router.get('/', utilities.authorizeAccount, utilities.handleErrors(invController.buildManagement));
 router.get('/addclassification', utilities.handleErrors(invController.buildAddClassification));
 router.post(
     '/addclassification',
     invClassValidate.classificationRules(),
     invClassValidate.checkClassificationData,
+    utilities.authorizeAccount,
     utilities.handleErrors(invController.registerNewClassification)
     );
 router.get('/addvehicle', utilities.handleErrors(invController.buildAddInventory));
@@ -22,6 +23,7 @@ router.post(
     '/addvehicle',
     invClassValidate.inventoryRules(),
     invClassValidate.checkInventoryData,
+    utilities.authorizeAccount,
     utilities.handleErrors(invController.addVehicle)
 );
 router.get('/getInventory/:classification_id', utilities.handleErrors(invController.getInventoryJSON));
@@ -30,8 +32,9 @@ router.post(
     '/update/',
     invClassValidate.newInventoryRules(),
     invClassValidate.checkUpdateData, 
+    utilities.authorizeAccount,
     utilities.handleErrors(invController.updateInventory));
-router.get('/delete/:inv_id', utilities.handleErrors(invController.buildInventoryDelete));
-router.post('/delete/', utilities.handleErrors(invController.deleteInventory))
+router.get('/delete/:inv_id', utilities.authorizeAccount, utilities.handleErrors(invController.buildInventoryDelete));
+router.post('/delete/', utilities.authorizeAccount, utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router;

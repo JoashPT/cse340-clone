@@ -1,0 +1,44 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<div class="columnFlow">
+    <%- messages() %>
+
+    <% if (errors) { %>
+        <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
+        </ul>
+    <% } %>
+
+    <form class="accountForm" action="/account/update" method="post" target="_self" >
+        <fieldset>
+            <label for="account_firstname">First Name:</label>
+            <input type="text" id="account_firstname" name="account_firstname" title="Put your first name here" value="<%= locals.account_firstname %>" required>
+            <label for="account_lastname">Last Name:</label>
+            <input type="text" id="account_lastname" name="account_lastname" title="Put your last name here" value="<%= locals.account_lastname %>" required>
+            <label for="account_email">Email:</label>
+            <span class="reminder">Must be an email</span>
+            <input type="email" id="account_email" name="account_email" title="Put your email here" value="<%= locals.account_email %>" required>
+            <input type="submit" value="Update Content">
+            <input type="hidden" name="account_id"
+            <% if (locals.account_id) { %> value="<%=locals.account_id%>"
+            <% } %>>
+        </fieldset>
+    </form>
+    <form class="accountForm" action="/account/update/password" method="post" target="_self" >
+        <fieldset>
+            <label for="account_password">Password:</label>
+            <span class="reminder">Entering and submitting a password will change your password</span>
+            <input type="password" id="password" name="account_password" title="Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
+            <input type="submit" value="Update Password">
+            <input type="hidden" name="account_id"
+            <% if (locals.account_id) { %> value="<%=locals.account_id%>"
+            <% } %>>
+        </fieldset>
+    </form>
+</div>

@@ -26,7 +26,7 @@ classificationList.addEventListener("change", function() {
 function buildInventoryList(data) {
     let inventoryDisplay = document.getElementById("inventoryDisplay");
     // Set up the table labels
-    let dataTable = '<thread>';
+    let dataTable = '<thead>';
     dataTable += '<tr><th>Vehicle Name</th><td>&nbsp;</td><td>&nbsp;</td></tr>';
     dataTable += '</thead>';
     // Set up the table body

@@ -55,8 +55,6 @@ app.set("layout", "./layouts/layout")
  * Routes
  *************************/
 app.use(static)
-
-//Index Route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 app.use("/account", accountRoute)
@@ -77,12 +75,14 @@ app.use(async (req, res, next) => {
 
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
+  const greet = await utilities.accountGreet(req, res);
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
   if (err.status == 404 || err.status == 500) {message = err.message} else {message = '<p class="error">Oh no! There was a crash. Maybe try a different route?</p>'}
   res.render("errors/error", {
     title: err.status || 'Server Error',
     message,
-    nav
+    nav,
+    greet
   })
 })
 
