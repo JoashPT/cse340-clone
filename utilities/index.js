@@ -143,8 +143,7 @@ Util.accountGreet = async (req, res, next) => {
     if (req.cookies.jwt) {
         let payload = jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET);
         let firstname = payload.account_firstname;
-        let id = payload.account_id
-        tools += `<li><a href="/account/edit/${id}">Welcome ${firstname}</a></li>`;
+        tools += `<li><a href="/account">Welcome ${firstname}</a></li>`;
         tools += '<li><a href="/account/logout" title="Click to log out">Logout</a></li>';
     } else {
         tools += '<li><a href="/account/login" title="Click to log in">My Account</a></li>';
@@ -182,12 +181,53 @@ Util.accountManagement = async (req, res, next) => {
             message += '<h3>Inventory Management<h3>';
             message += '<p><a href="/inv/">Inventory Management</a></p>';
         }
+        if (type == 'Admin') {
+            message += '<h3>List of Accounts<h3>';
+            message += '<p><a href="/account/list">List of accounts</a></p>';
+        }
         message += '</div>'
         return message;
     } else {
         req.flash('notice', "Please login as 'Employee' or 'Administrator' before proceeding")
         res.redirect('/')
     }
+}
+
+/* *************************
+ * Middleware for the final project
+ * Validates only the 'Admin'
+ * ********************** */
+Util.authorizeAdmin = async (req, res, next) => {
+    if (req.cookies.jwt) {
+        let payload = jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET);
+        let type = payload.account_type;
+        if (type == 'Admin') {
+            next()
+        } else {
+            req.flash('notice', 'You are not authorized to use this section')
+            res.redirect('/')
+        }
+    } else {
+        req.flash('notice', "Please login as an 'Administrator' before proceeding")
+        res.redirect('/')
+    }
+}
+
+/* *************************
+ * Deliver table for the final project
+ * ********************** */
+Util.userTable = async (dataList) => {
+    let tableContent = "";
+    console.log(dataList)
+    dataList.forEach(item => {
+        tableContent += '<tr>'
+        tableContent += `<td>${item.account_firstname}</td>`
+        tableContent += `<td>${item.account_lastname}</td>`
+        tableContent += `<td>${item.account_email}</td>`
+        tableContent += `<td>${item.account_type}</td>`
+        tableContent += '</tr>'
+    });
+    return tableContent;
 }
 
 /* ****************************************

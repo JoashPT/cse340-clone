@@ -34,5 +34,9 @@ router.post('/update/password',
     regValidate.checkEditData,
     utilities.handleErrors(accountController.updateAccountPassword)
 )
+/* ****************************
+ * Router for the final project
+ * ************************* */
+router.get('/list', utilities.authorizeAdmin, utilities.handleErrors(accountController.buildAccountList))
 
 module.exports = router;

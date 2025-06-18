@@ -236,8 +236,6 @@ async function updateAccountContent(req, res) {
     );
 
     if (regResult) {
-        console.table(regResult)
-        console.log('regResult for account content')
         req.flash(
             'notice',
             `Congratulations, you\'ve updated ${account_firstname}`
@@ -307,6 +305,23 @@ async function updateAccountPassword(req, res) {
     }
 }
 
+/* **************************
+ * Controller for the project
+ * *********************** */
+async function buildAccountList(req, res) {
+    let nav = await utilities.getNav();
+    const greet = await utilities.accountGreet(req, res);
+    const dataList = await accountModel.getAccounts();
+    const accountTable = await utilities.userTable(dataList.rows);
+    res.render('account/account-list', {
+        title: "List of Accounts",
+        nav,
+        greet,
+        accountList: accountTable,
+        errors: null,
+    })
+}
+
 module.exports = {
     buildLogin,
     buildRegistration,
@@ -317,5 +332,6 @@ module.exports = {
     logoutManagement,
     buildAccountEdit,
     updateAccountContent,
-    updateAccountPassword
+    updateAccountPassword,
+    buildAccountList
 }

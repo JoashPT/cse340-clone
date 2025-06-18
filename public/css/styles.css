@@ -33,11 +33,13 @@ General text
 ==========*/
 h1,
 h2,
+th,
 header {
   font-family: var(--title-font);
 }
 
 p,
+td,
 li {
   font-family: var(--content-font);
 }
@@ -376,6 +378,30 @@ vehicle management
 
 .management > a {
   margin: 0.5rem 0;
+}
+
+/*====
+.tableStyle
+=====*/
+.tableStyle {
+  background-color: var(--content-background);
+  margin: 1rem 0;
+  border: 10px solid var(--content-border);
+  border-collapse: collapse;
+}
+
+.tableStyle > tbody > tr > th,
+.tableStyle > tbody > tr > td {
+  border: 1px solid var(--content-border);
+  padding: 1rem;
+}
+
+.tableStyle > tbody > tr > th {
+  border-bottom: 5px double var(--content-border);
+}
+
+.tableStyle > tbody > tr:nth-of-type(even) {
+  background-color: var(--content-background-2);
 }
 
 /*===

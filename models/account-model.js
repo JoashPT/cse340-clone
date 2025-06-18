@@ -97,6 +97,14 @@ async function updateAccountPassword(account_password, account_id){
     }
 }
 
+/* *************************
+ * Model for the final project
+ * Collects all the account
+ * ********************** */
+async function getAccounts() {
+    return await pool.query("SELECT * FROM public.account ORDER BY account_id");
+}
+
 module.exports = {
     registerAccount,
     checkExistingEmail,
@@ -104,5 +112,6 @@ module.exports = {
     getAccountByEmail,
     getAccountById,
     updateAccountContent,
-    updateAccountPassword
+    updateAccountPassword,
+    getAccounts
 }
